@@ -3,13 +3,6 @@ import { ClaudeMovieRaw, MovieRecommendation } from "@/types/recommendation";
 const TMDB_BASE = "https://api.themoviedb.org/3";
 const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
 
-function getHeaders() {
-  return {
-    Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
-    "Content-Type": "application/json",
-  };
-}
-
 interface TMDBSearchResult {
   id: number;
   title: string;
@@ -20,10 +13,10 @@ interface TMDBSearchResult {
 }
 
 async function searchMovie(title: string, year?: number): Promise<TMDBSearchResult | null> {
-  const params = new URLSearchParams({ query: title });
+  const params = new URLSearchParams({ query: title, api_key: process.env.TMDB_API_KEY! });
   if (year) params.set("year", String(year));
 
-  const res = await fetch(`${TMDB_BASE}/search/movie?${params}`, { headers: getHeaders() });
+  const res = await fetch(`${TMDB_BASE}/search/movie?${params}`);
   if (!res.ok) return null;
 
   const data = await res.json();

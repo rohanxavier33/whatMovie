@@ -62,7 +62,7 @@ export async function getRecommendations(answers: QuizAnswersPayload): Promise<C
   const prompt = buildPrompt(answers);
 
   const response = await client.chat.completions.create({
-    model: "qwen/qwen3-next-80b-a3b-instruct:free",
+    model: "arcee-ai/trinity-large-preview:free",
     max_tokens: 1024,
     temperature: 0.9,
     messages: [{ role: "user", content: prompt }],
